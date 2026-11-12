@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Philanthropist: app walkthrough</title>
+<style>
+:root{--page:#F5F3FF;--pt:#1E1033;--pm:#5B4B7A;--bar:#DDD6FE;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#140A26;--pt:#EDE9FE;--pm:#C4B5FD;--bar:#3B2A5C}}
+:root[data-theme="dark"]{--page:#140A26;--pt:#EDE9FE;--pm:#C4B5FD;--bar:#3B2A5C}
+html,body{margin:0;background:var(--page);color:var(--pt);font-family:Arial,Helvetica,sans-serif}
+main{max-width:520px;margin:0 auto;padding:16px;display:flex;flex-direction:column;align-items:center;gap:12px}
+header{width:100%;display:flex;justify-content:space-between;align-items:center;font-size:14px}
+#chap{color:var(--pm)}
+#stage{position:relative;width:336px;height:656px;border-radius:40px;overflow:hidden;background:#2E1065;padding:8px;box-sizing:border-box}
+#screen{width:320px;height:640px;border-radius:32px;overflow:hidden;background:#F5F3FF;color:#1E1033;font-size:13px;position:relative;transition:opacity .35s}
+#cap{min-height:44px;margin:0;text-align:center;font-size:16px;max-width:340px}
+#bar{width:336px;height:6px;border-radius:3px;background:var(--bar)}
+#fill{display:block;height:6px;border-radius:3px;background:#6D28D9;width:0}
+button.c{min-height:44px;border-radius:22px;border:1.5px solid #6D28D9;background:transparent;color:var(--pt);padding:0 20px;font-size:15px;font-weight:700;margin:0 4px}
+.app{height:100%;box-sizing:border-box;padding:14px;display:flex;flex-direction:column;gap:8px;position:relative}
+.top{display:flex;align-items:center;gap:6px;color:#2E1065}
+.lg{width:24px;height:24px;border-radius:8px;background:#6D28D9;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+h2{margin:0;font-size:19px;color:#2E1065}
+.l{font-size:10px;font-weight:700;color:#5B4B7A;letter-spacing:.04em;margin-bottom:3px}
+.in{min-height:34px;box-sizing:border-box;padding:8px 10px;border:1.5px solid #DDD6FE;border-radius:12px;background:#fff;font-size:13px;display:flex;align-items:center}
+.in.t{min-height:84px;align-items:flex-start}
+.ch{display:flex;gap:5px;flex-wrap:wrap}
+.ch i{font-style:normal;border-radius:14px;padding:6px 11px;background:#EDE9FE;color:#4C1D95;transition:all .25s}
+.ch i.on{background:#6D28D9;color:#fff;font-weight:700}
+.btn{margin-top:auto;min-height:44px;border-radius:22px;background:#6D28D9;color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;transition:transform .2s}
+.pr{transform:scale(.94);background:#4C1D95}
+.card{background:#fff;border-radius:18px;box-shadow:0 6px 18px rgba(76,29,149,.14)}
+#deck{position:relative;height:392px}
+.sc{position:absolute;inset:0;overflow:hidden;transition:transform .5s ease,opacity .5s}
+.hero{height:170px;background:linear-gradient(160deg,#4C1D95,#A78BFA);display:flex;align-items:center;justify-content:center;position:relative}
+.av{width:68px;height:68px;border-radius:50%;background:#fff;color:#6D28D9;font-size:30px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.tag{position:absolute;top:10px;left:10px;background:#fff;color:#4C1D95;border-radius:12px;padding:4px 10px;font-size:11px;font-weight:700}
+.bd{padding:12px;display:flex;flex-direction:column;gap:6px}
+.bd b.hd{font-size:16px;color:#2E1065}
+.mut{color:#5B4B7A}
+.chips{display:flex;gap:5px}
+.chips i{font-style:normal;background:#EDE9FE;color:#4C1D95;border-radius:12px;padding:5px 10px;font-size:11px}
+.stamp{position:absolute;top:16px;font-size:22px;padding:2px 10px;border:3px solid;border-radius:8px;background:#fff;opacity:0;transition:opacity .2s}
+.s-r{left:14px;color:#6D28D9;transform:rotate(-12deg)}
+.s-l{right:14px;color:#5B4B7A;transform:rotate(12deg)}
+.r .s-r,.l .s-l{opacity:1}
+.acts{display:flex;justify-content:space-evenly;align-items:center}
+.acts span{width:48px;height:48px;border-radius:50%;background:#fff;box-shadow:0 4px 12px rgba(76,29,149,.2);display:flex;align-items:center;justify-content:center;transition:transform .2s}
+.acts span.big{width:58px;height:58px;background:#6D28D9}
+.acts span.pr{transform:scale(1.25)}
+.toast{position:absolute;left:14px;right:14px;bottom:14px;background:#2E1065;color:#fff;border-radius:14px;padding:10px 12px;text-align:center;opacity:0;transition:opacity .3s}
+.toast.on{opacity:1}
+.item{display:flex;gap:10px;align-items:center;padding:10px;overflow:hidden;transition:all .6s;max-height:70px}
+.item.out{max-height:0;padding:0 10px;opacity:0;margin:-4px 0}
+.item .av{width:38px;height:38px;font-size:16px;background:#6D28D9;color:#fff}
+.pill{margin-left:auto;background:#EDE9FE;color:#4C1D95;border-radius:12px;padding:5px 10px;font-size:11px;font-weight:700}
+#ov{position:absolute;inset:0;background:#2E1065;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;padding:24px;opacity:0;pointer-events:none;transition:opacity .6s}
+#ov.on{opacity:1}
+#ov h3{margin:0;font-size:26px}
+#ov p{margin:0;color:#DDD6FE;font-size:15px}
+.ring{width:84px;height:84px;border-radius:50%;border:4px solid #A78BFA;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:700;animation:pu 1.4s ease-in-out infinite}
+@keyframes pu{0%,100%{transform:scale(.9)}50%{transform:scale(1.12)}}
+@media (prefers-reduced-motion:reduce){.ring{animation:none}}
+</style>
+</head>
+<body>
+<main>
+<header><b>Philanthropist</b><span id="chap"></span></header>
+<div id="stage"><div id="screen"></div><div id="ov"></div></div>
+<p id="cap" aria-live="polite"></p>
+<div id="bar"><i id="fill"></i></div>
+<div><button class="c" id="pp">Pause</button><button class="c" id="rs">Replay</button></div>
+</main>
+<script>
+(function(){
+var tok=0,paused=false,el=0,TOTAL=72000;
+function $(s){return document.querySelector(s)}
+async function w(ms){var t=tok,d=0;while(d<ms){await new Promise(function(r){setTimeout(r,50)});if(t!==tok)throw 0;if(!paused){d+=50;el+=50;$('#fill').style.width=Math.min(100,el/TOTAL*100)+'%'}}}
+function cap(t,c){$('#cap').textContent=t;if(c)$('#chap').textContent=c}
+function scr(h){$('#screen').innerHTML='<div class="app">'+h+'</div>'}
+function top(t){return '<div class="top"><span class="lg">P</span><b>Philanthropist</b></div><h2>'+t+'</h2>'}
+function fld(id,l,t){return '<div><div class="l">'+l+'</div><div class="in'+(t?' t':'')+'" id="'+id+'"></div></div>'}
+function ch(p,a){return '<div class="ch">'+a.map(function(x){return '<i data-k="'+p+x+'">'+x+'</i>'}).join('')+'</div>'}
+function lab(t){return '<div class="l" style="margin-bottom:-4px">'+t+'</div>'}
+function pick(k){$('[data-k="'+k+'"]').classList.add('on')}
+async function press(s){var e=$(s);e.classList.add('pr');await w(350);e.classList.remove('pr')}
+async function ty(id,txt,sp){var e=$(id);for(var i=0;i<txt.length;i++){e.textContent+=txt[i];await w(sp||40)}await w(250)}
+async function toast(t){var e=$('.toast');e.textContent=t;e.classList.add('on');await w(1200);e.classList.remove('on')}
+async function cut(a,b,after){var o=$('#ov');o.innerHTML='<div class="ring">P</div><h3>'+a+'</h3><p>'+b+'</p>';o.classList.add('on');await w(700);if(after)after();await w(1500);o.classList.remove('on');await w(700)}
+var P=[['Maya, 29','Student loan','$18,400','Teacher paying down her loan','M'],['Dev, 41','Medical bill','$6,900','Surgery bills after an accident','D'],['Sara, 35','Credit card','$4,200','Single parent clearing card debt','S'],['Rui, 52','Mortgage','$31,000','Laid off and behind on payments','R']];
+function card(p){return '<div class="card sc"><div class="hero"><span class="av">'+p[4]+'</span><span class="tag">'+p[1]+'</span></div><div class="bd"><div class="mut">'+p[0]+'</div><b class="hd">'+p[3]+'</b><div>Requested <b>'+p[2]+'</b></div><div class="chips"><i>ID verified</i><i>Debt verified</i></div></div><b class="stamp s-r">PLEDGE</b><b class="stamp s-l">PASS</b></div>'}
+var X='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6D28D9" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',HT='<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"><path d="M12 21s-7-4.5-9-9a5 5 0 019-3 5 5 0 019 3c-2 4.5-9 9-9 9z"/></svg>',BM='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6D28D9" stroke-width="2.4" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z"/></svg>';
+async function sw(dir,msg){var c=$('#deck .sc:last-child');c.style.transform='translateX('+dir*50+'px) rotate('+dir*5+'deg)';c.classList.add(dir>0?'r':'l');await w(700);await press(dir>0?'#bp':'#bx');c.style.transform='translateX('+dir*420+'px) rotate('+dir*22+'deg)';c.style.opacity=0;if(msg)toast(msg);await w(700);c.remove();await w(500)}
+async function run(){
+el=0;$('#fill').style.width='0';
+try{
+$('#chap').textContent='';scr('');cap('');
+var o=$('#ov');o.innerHTML='<div class="ring">P</div><h3>Philanthropist</h3><p>Product walkthrough</p>';o.classList.add('on');await w(2200);
+scr(top('Discover')+'<div id="deck">'+P.slice().reverse().map(card).join('')+'</div><div class="acts"><span id="bx" aria-label="Pass">'+X+'</span><span class="big" id="bp" aria-label="Pledge">'+HT+'</span><span id="bs">'+BM+'</span></div><div class="toast"></div>');
+o.classList.remove('on');await w(700);
+cap('The donor sees verified debtors, one card at a time.','1 Donor: browse and swipe');await w(2200);
+cap('Swipe right to pledge to pay off Maya’s student loan.');await sw(1,'Pledge sent: funds go to escrow');
+cap('Swipe left to pass on Dev.');await sw(-1);
+cap('Right again: Sara’s credit card debt.');await sw(1,'Pledge sent: funds go to escrow');
+cap('And left on Rui.');await sw(-1);await w(600);
+await cut('Now: the debtor’s side','Creating a profile and listing a debt',function(){
+scr(top('Your profile')+'<div style="display:flex;align-items:center;gap:10px"><span class="av" style="background:#6D28D9;color:#fff;width:52px;height:52px;font-size:22px">M</span><b style="color:#4C1D95">Add photo</b></div>'+fld('n','DISPLAY NAME')+fld('c','CITY AND REGION')+fld('h','HEADLINE')+fld('s','YOUR STORY',1)+'<div class="mut" style="font-size:12px">Photo and full name stay hidden until a match.</div><div class="btn" id="sv">Save profile</div>');cap('','2 Debtor: profile and debt')});
+cap('Maya builds her profile.');await ty('#n','Maya',90);await ty('#c','Columbus, Ohio',45);await ty('#h','Teacher paying down her loan',35);await ty('#s','I took this loan to finish my degree. After my mother fell ill, my savings went to her care.',22);await w(500);await press('#sv');
+scr(top('Add a debt')+ch('d-',['Student loan','Credit card','Mortgage','Medical'])+fld('l','LENDER')+fld('a','AMOUNT REQUESTED')+fld('p','I CAN CO-PAY')+fld('w','WHY I DESERVE RELIEF',1)+'<div class="btn" id="sb">Submit for review</div><div class="toast"></div>');
+cap('Then she lists the debt: type, lender, amount, co-pay and her reason.');await w(800);pick('d-Student loan');await w(500);await ty('#l','Example Student Loans',35);await ty('#a','$18,400',90);await ty('#p','10%',120);await ty('#w','Paying this off frees me to keep teaching.',30);await w(400);await press('#sb');await toast('Submitted for review');
+scr(top('My debts')+'<div class="card item" style="max-height:none"><span class="av">S</span><div><b>Student loan · $18,400</b><div class="mut">Example Student Loans</div></div><span class="pill" id="st">In review</span></div><div class="toast"></div>');
+cap('Our team reviews it, then it goes live in donors’ feeds.');await w(1800);$('#st').textContent='Live';$('#st').style.background='#6D28D9';$('#st').style.color='#fff';await w(2000);
+await cut('Back to the donor','Choosing which debts appear in the feed',function(){
+scr(top('Your profile')+fld('n','DISPLAY NAME')+lab('VISIBILITY TO DEBTORS')+ch('v-',['Public','First name','Anonymous'])+lab('CAUSES')+ch('c-',['Education','Health','Housing','Families'])+'<div class="btn" id="sv">Save profile</div>');cap('','3 Donor: preferences and feed')});
+cap('The donor sets up a profile and chooses to stay anonymous.');await ty('#n','Anonymous Giver',45);pick('v-Anonymous');await w(500);pick('c-Education');await w(400);pick('c-Health');await w(700);await press('#sv');
+scr(top('Preferences')+lab('DEBT TYPES')+ch('e-',['Student loan','Credit card','Mortgage','Medical bill'])+fld('r','REGION')+fld('m','AMOUNT PER DEBT')+lab('PAYOFF MODE')+ch('o-',['Full only','Partial ok','Either'])+'<div class="btn" id="sv">Save preferences</div>');
+cap('Preferences decide what shows up: debt types, region, amount and payoff mode.');await w(900);pick('e-Student loan');await w(500);pick('e-Medical bill');await w(600);await ty('#r','United States',50);await ty('#m','$5,000 to $50,000',45);pick('o-Partial ok');await w(800);await press('#sv');
+scr(top('Your feed')+P.map(function(p,i){return '<div class="card item" id="i'+i+'"><span class="av">'+p[4]+'</span><div><b>'+p[0]+'</b><div class="mut">'+p[3]+'</div></div><span class="pill">'+p[1]+'</span></div>'}).join('')+'<div class="mut" style="text-align:center;font-size:12px;margin-top:6px" id="fl"></div>');
+cap('Before filtering, the feed shows every debt type.');await w(2000);
+cap('After saving, only student loans and medical bills remain.');$('#i2').classList.add('out');$('#i3').classList.add('out');$('#fl').textContent='Hidden by your filters: credit card, mortgage';await w(3500);
+var o2=$('#ov');o2.innerHTML='<div class="ring">P</div><h3>Philanthropist</h3><p>Clear a debt. Change a life.</p>';o2.classList.add('on');cap('');await w(2500);
+}catch(e){}
+}
+$('#pp').onclick=function(){paused=!paused;this.textContent=paused?'Play':'Pause'};
+$('#rs').onclick=function(){tok++;paused=false;$('#pp').textContent='Pause';$('#ov').classList.remove('on');run()};
+run();
+})();
+</script>
+</body>
+</html>
