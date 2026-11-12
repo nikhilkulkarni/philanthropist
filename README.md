@@ -10,7 +10,7 @@ A swipe-based app that matches high-net-worth donors with people seeking debt re
 |---|---|---|
 | Requirements | Detailed Stage 1 and high-level Stage 2 requirements | [./docs/specs/](https://github.com/nikhilkulkarni/philanthropist/blob/main/docs/specs/Requirements%20Donor%E2%80%93Debtor%20Matching%20App.md) |
 | App screens | 18 purple-themed screens on a canvas (donor, debtor, shared, admin) | [./docs/specs/](https://github.com/nikhilkulkarni/philanthropist/blob/main/docs/ui/Philanthropist%20App%20Screens.html) |
-| Animated walkthrough | About 70 seconds, self-playing, with Pause and Replay | .. |
+| Animated walkthrough | About 70 seconds, self-playing, with Pause and Replay | [Page](https://nikhilkulkarni.github.io/philanthropist/) |
 | `philanthropist-walkthrough.html` | Source file of the walkthrough, a single self-contained HTML page | this folder |
 
 ## How it works
