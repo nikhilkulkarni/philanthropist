@@ -218,6 +218,3 @@ A mobile-first app and website with a Tinder-like swipe experience. **Donors** (
 9. **Reservation and cooling-off windows:** the defaults proposed above need business sign-off.
 10. **Debtor acceptance step:** can a debtor decline a donor (for example, over conditions or visibility)?
 
-## 9. Next Step
-
-Once you have reviewed and amended this draft, we will move to the wireframe. Proposed order: (1) donor swipe flow, (2) debtor profile and debt listing, (3) match, escrow, and validation tracker, (4) admin console.
